@@ -18,7 +18,8 @@ namespace NetWorkApi.Controllers
         /// The repository
         /// </summary>
         /// <param name="repository"></param>
-        public UserController(IRepository<AppUser> repository): base(repository)
+        public UserController(IRepository<AppUser> repository)
+            :base(repository)
         {
 
         }
