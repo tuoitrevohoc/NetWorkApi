@@ -31,7 +31,7 @@ namespace NetWorkApi
 
             services.AddSwaggerGen();
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;";
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
             services.AddSingleton<IRepository<AppUser>>(
