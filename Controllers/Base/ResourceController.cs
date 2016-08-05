@@ -2,6 +2,7 @@
 using NetWorkApi.Models;
 using NetWorkApi.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NetWorkApi.Controllers
 {
@@ -32,7 +33,7 @@ namespace NetWorkApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Entity GetData(int id)
+        public Entity GetData(string id)
         {
             return repository.Get(id);
         }
@@ -45,7 +46,7 @@ namespace NetWorkApi.Controllers
         [HttpGet]
         public IList<Entity> GetList()
         {
-            return null;
+            return repository.Elements.ToList();
         }
     }
 }

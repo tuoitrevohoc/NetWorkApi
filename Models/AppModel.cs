@@ -14,6 +14,6 @@ namespace NetWorkApi.Models
         /// Id of the model
         /// </summary>
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

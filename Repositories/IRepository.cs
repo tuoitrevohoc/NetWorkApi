@@ -23,7 +23,7 @@ namespace NetWorkApi.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Entity Get(int id);
+        Entity Get(string id);
 
         /// <summary>
         /// Save an entity
@@ -35,8 +35,8 @@ namespace NetWorkApi.Repositories
         /// <summary>
         /// Delete an entity
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(Entity entity);
+        bool Delete(string id);
     }
 }

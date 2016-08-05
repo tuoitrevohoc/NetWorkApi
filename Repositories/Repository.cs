@@ -1,6 +1,9 @@
 ﻿using NetWorkApi.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using MongoDB.Driver;
+using System.Linq;
+using System;
+using MongoDB.Bson;
 
 namespace NetWorkApi.Repositories
 {
@@ -12,14 +15,9 @@ namespace NetWorkApi.Repositories
     {
 
         /// <summary>
-        /// The database set
+        /// the collection
         /// </summary>
-        private DbSet<Entity> dbSet;
-
-        /// <summary>
-        /// The database context
-        /// </summary>
-        private DbContext context;
+        private IMongoCollection<Entity> collection;
 
 
         /// <summary>
@@ -29,31 +27,29 @@ namespace NetWorkApi.Repositories
         {
             get
             {
-                return dbSet;
+                return collection.AsQueryable();
             }
         }
 
         /// <summary>
         /// Initialize with a database set
         /// </summary>
-        /// <param name="context"></param>
-        public Repository(DbContext context)
+        /// <param name="collection"></param>
+        public Repository(IMongoCollection<Entity> collection)
         {
-            dbSet = context.Set<Entity>();
-            this.context = context;
+            this.collection = collection;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(Entity entity)
+        public bool Delete(string id)
         {
-            dbSet.Remove(entity);
-            context.SaveChanges();
+            var result = collection.DeleteOne(item => item.Id.Equals(id));
 
-            return true;
+            return result.DeletedCount == 1;
         }
 
 
@@ -62,9 +58,9 @@ namespace NetWorkApi.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Entity Get(int id)
+        public Entity Get(string id)
         {
-            return dbSet.FirstOrDefaultAsync(item => item.Id == id).Result;
+            return Elements.FirstOrDefault(item => item.Id.Equals(id));
         }
 
 
@@ -75,8 +71,16 @@ namespace NetWorkApi.Repositories
         /// <returns></returns>
         public Entity Save(Entity entity)
         {
-            dbSet.Add(entity);
-            context.SaveChanges();
+            if (entity.Id == null)
+            {
+                var objectId = ObjectId.GenerateNewId().ToString();
+
+                entity.Id = Guid.NewGuid().ToString();
+                collection.InsertOne(entity);
+            } else
+            {
+                collection.ReplaceOne(item => item.Id == entity.Id, entity);
+            }
 
             return entity;
         }

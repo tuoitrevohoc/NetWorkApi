@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using NetWorkApi.Models;
 using Microsoft.EntityFrameworkCore;
 using NetWorkApi.Repositories;
+using MongoDB.Driver;
+using System;
 
 namespace NetWorkApi
 {
@@ -31,12 +33,18 @@ namespace NetWorkApi
 
             services.AddSwaggerGen();
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;";
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            var mongoUri = Environment.GetEnvironmentVariable("MONGO_URI") 
+                                ?? "mongodb://localhost:27017";
+            var databaseName = Environment.GetEnvironmentVariable("MONGO_DB") ?? "networkapi";
+
+            var client = new MongoClient(mongoUri);
+            var database = client.GetDatabase(databaseName);
+
+            services.AddSingleton(database);
 
             services.AddSingleton<IRepository<AppUser>>(
                     context => new Repository<AppUser>(
-                        context.GetService<AppDbContext>()
+                        database.GetCollection<AppUser>("users")
                     )
                 );
         }

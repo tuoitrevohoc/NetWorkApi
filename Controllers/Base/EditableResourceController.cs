@@ -49,10 +49,10 @@ namespace NetWorkApi.Controllers.Base
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
-        public bool Delete(int id)
+        [HttpDelete("{id}")]
+        public bool Delete(string id)
         {
-            return true;
+            return repository.Delete(id);
         }
     }
 }
