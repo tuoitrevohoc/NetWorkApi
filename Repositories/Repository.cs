@@ -73,9 +73,7 @@ namespace NetWorkApi.Repositories
         {
             if (entity.Id == null)
             {
-                var objectId = ObjectId.GenerateNewId().ToString();
-
-                entity.Id = Guid.NewGuid().ToString();
+                entity.Id = ObjectId.GenerateNewId().ToString();
                 collection.InsertOne(entity);
             } else
             {
