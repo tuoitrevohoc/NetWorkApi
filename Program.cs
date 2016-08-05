@@ -13,9 +13,9 @@ namespace NetWorkApi
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5433")
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://0.0.0.0:5000")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
