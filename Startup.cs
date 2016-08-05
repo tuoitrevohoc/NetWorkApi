@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetWorkApi.Models;
-using Microsoft.EntityFrameworkCore;
 using NetWorkApi.Repositories;
 using MongoDB.Driver;
 using System;
@@ -35,6 +34,9 @@ namespace NetWorkApi
 
             var mongoUri = Environment.GetEnvironmentVariable("MONGO_URI") 
                                 ?? "mongodb://localhost:27017";
+
+            Console.WriteLine("Connect to database: " + mongoUri);
+
             var databaseName = Environment.GetEnvironmentVariable("MONGO_DB") ?? "networkapi";
 
             var client = new MongoClient(mongoUri);
