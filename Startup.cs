@@ -32,14 +32,19 @@ namespace NetWorkApi
 
             services.AddSwaggerGen();
 
-            var mongoUri = Environment.GetEnvironmentVariable("MONGO_URI") 
-                                ?? "mongodb://localhost:27017";
+            var mongoServer = Environment.GetEnvironmentVariable("MONGO_SERVER") ?? "localhost";
 
-            Console.WriteLine("Connect to database: " + mongoUri);
+            Console.WriteLine("Connect to server: " + mongoServer);
 
             var databaseName = Environment.GetEnvironmentVariable("MONGO_DB") ?? "networkapi";
 
-            var client = new MongoClient(mongoUri);
+            var client = new MongoClient(new MongoClientSettings()
+            {
+                ConnectionMode = ConnectionMode.Standalone,
+                Server = new MongoServerAddress(mongoServer, 27017),
+                ConnectTimeout = new TimeSpan(0, 0, 10),
+            });
+
             var database = client.GetDatabase(databaseName);
 
             services.AddSingleton(database);
