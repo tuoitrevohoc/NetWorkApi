@@ -40,7 +40,7 @@ namespace NetWorkApi
 
             var client = new MongoClient(new MongoClientSettings()
             {
-                ConnectionMode = ConnectionMode.Standalone,
+                ConnectionMode = ConnectionMode.Direct,
                 Server = new MongoServerAddress(mongoServer, 27017),
                 ConnectTimeout = new TimeSpan(0, 0, 10),
             });
