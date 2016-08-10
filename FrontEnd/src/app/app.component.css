@@ -32,7 +32,9 @@ app-menu.vertical.menu {
     margin-left: 250px;
     background-color: #f5f5f5;
     flex-grow: 1;
+    flex-direction: column;
     transition-duration: 0.25s;
+    display: flex;
 }
 
 .ui.top.fixed.menu {
@@ -41,19 +43,6 @@ app-menu.vertical.menu {
     background-color: #2b3d51;
     border: 0px;
     height: 60px;
-}
-
-.app-content .heading {
-    background-color: #fff;
-    display: flex;
-    flex-direction: row;
-    height: 60px;
-    padding: 17px 20px;
-}
-
-.app-content .heading h4 {
-    font-weight: 500;
-    font-size: 20px;
 }
 
 .app-container.collapsed app-menu.vertical.menu {

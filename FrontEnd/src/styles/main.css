@@ -76,6 +76,7 @@ app-menu.vertical.menu .item {
 .app-content .heading {
     background-color: #fff;
     display: flex;
+    flex-grow: 1;
     flex-direction: row;
     height: 60px;
     padding: 17px 20px;
