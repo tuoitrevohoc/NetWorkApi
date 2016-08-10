@@ -16,6 +16,7 @@ h1, h2, h3, h4, h5 {
     font-size: 14px;
     font-family: "Roboto", sans-serif;
     font-weight: 500;
+    padding: 20px;
 }
 
 .ui.menu a.item:hover {
@@ -29,11 +30,19 @@ h1, h2, h3, h4, h5 {
     color: rgba(43, 61, 81, 0.8);
     text-align: center;
     font-size: 18px;
+    transition-duration: 0.25s;
+    display: inline-block;
 }
 
 .ui.vertical.menu .item>i.icon {
     float: none;
-    margin: 0px 20px 0px 0px;
+    margin: 0px 20px 0px 5px;
+}
+
+.ui.top.fixed.menu .item {
+    color: white;
+    font-size: 15px;
+    transition-duration: 0.25s;
 }
 
 .content-box {
@@ -43,4 +52,23 @@ h1, h2, h3, h4, h5 {
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+}
+
+#search-box input {
+    border: 1px solid rgba(129, 138, 145, 0.3);
+    font-size: 13px;
+    height: 34px;
+    color: #ffffff;
+    background: rgba(129, 138, 145, 0.1);
+    box-shadow: none;
+    border-radius: 30px;
+    width: 200px;
+}
+
+#search-box >.icon {
+    color: white;
+}
+
+app-menu.vertical.menu .item {
+    width: 250px;
 }

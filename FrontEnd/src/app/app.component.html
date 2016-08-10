@@ -1,9 +1,18 @@
-<div class="ui top fixed menu">
+<div class="ui top fixed menu"[class.collapsed]="collapsed">
     <a class="brand item">
         <i class="home icon"></i>
     </a>
+    <a class="item" (click)="collapsed = !collapsed">
+        <i class="content icon"></i>
+    </a>
+    <div class="item">
+        <div id="search-box" class="ui icon input">
+            <i class="search icon"></i>
+            <input type="text" placeholder="Search...">
+        </div>
+    </div>
 </div>
-<div class="app-container">
+<div class="app-container" [class.collapsed]="collapsed">
     <app-menu class="ui vertical menu"></app-menu>
     <div class="app-content">
         <div class="heading">
