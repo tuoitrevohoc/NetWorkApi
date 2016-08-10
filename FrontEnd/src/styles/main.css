@@ -1,0 +1,46 @@
+* {
+    font-family: "Roboto", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Roboto", sans-serif;
+}
+
+.ui.menu .item:before {
+    opacity: 0;
+}
+
+.ui.menu .item {
+    color: rgba(43, 61, 81, 0.8);
+    border-radius: 0 !important;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+.ui.menu a.item:hover {
+    background-color: #64b0f2;
+    color: #fff;
+}
+
+.ui.top.fixed.menu .brand.item {
+    background: #fff;
+    width: 250px;
+    color: rgba(43, 61, 81, 0.8);
+    text-align: center;
+    font-size: 18px;
+}
+
+.ui.vertical.menu .item>i.icon {
+    float: none;
+    margin: 0px 20px 0px 0px;
+}
+
+.content-box {
+    display: block;
+    margin: 20px 20px 0px 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+}

@@ -1,0 +1,54 @@
+/** css for app */
+
+/**
+    the app container
+*/
+.app-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+/**
+    left menu
+*/
+app-menu.vertical.menu {
+    position: fixed;
+    bottom: 0px;
+    top: 60px;
+    width: 250px;
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+}
+
+/**
+    the app content
+*/
+.app-content {
+    margin-top: 60px;
+    margin-left: 250px;
+    background-color: #f5f5f5;
+    flex-grow: 1;
+}
+
+.ui.top.fixed.menu {
+    box-shadow: none;
+    z-index: 1;
+    background-color: #2b3d51;
+    border: 0px;
+    height: 60px;
+}
+
+.app-content .heading {
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    padding: 17px 20px;
+}
+
+.app-content .heading h4 {
+    font-weight: 500;
+    font-size: 20px;
+}
