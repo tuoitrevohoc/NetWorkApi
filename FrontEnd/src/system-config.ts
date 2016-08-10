@@ -36,6 +36,7 @@ const barrels: string[] = [
   'app/shared',
   'app/map-view',
   'app/menu',
+  'app/entity-composer',
   /** @cli-barrel */
 ];
 
