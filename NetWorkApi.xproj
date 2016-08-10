@@ -15,5 +15,13 @@
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include=".git\" />
+    <DnxInvisibleFolder Include="AngularJs\dist\" />
+    <DnxInvisibleFolder Include="AngularJs\tmp\" />
+    <DnxInvisibleFolder Include="AngularJs\typings\" />
+    <DnxInvisibleFolder Include="Migrations\" />
+    <DnxInvisibleFolder Include="wwwroot\" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
