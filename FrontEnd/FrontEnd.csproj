@@ -45,6 +45,13 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app\app.routes.ts" />
+    <TypeScriptCompile Include="src\app\entity-composer\entity-composer.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\entity-composer\entity-composer.component.ts" />
+    <TypeScriptCompile Include="src\app\entity-composer\index.ts" />
+    <TypeScriptCompile Include="src\app\entity-composer\shared\index.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
