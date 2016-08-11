@@ -3,7 +3,6 @@ using NetWorkApi.Models;
 using NetWorkApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace NetWorkApi.Controllers
 {
@@ -36,8 +35,7 @@ namespace NetWorkApi.Controllers
         [HttpGet("{id}")]
         public Entity GetData(string id)
         {
-            throw new UnauthorizedAccessException();
-            //return repository.Get(id);
+            return repository.Get(id);
         }
 
 

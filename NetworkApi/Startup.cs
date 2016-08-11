@@ -48,7 +48,7 @@ namespace NetWorkApi
             services.AddSwaggerGen();
 
             var mongoUri = Environment.GetEnvironmentVariable("MONGO_URI")
-                                ?? "mongodb://localhost:27017";
+                                ?? "mongodb://127.0.0.1:27017";
 
             var databaseName = Environment.GetEnvironmentVariable("MONGO_DB") ?? "networkapi";
             var client = new MongoClient(mongoUri);
