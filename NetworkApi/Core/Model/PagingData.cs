@@ -23,6 +23,11 @@ namespace NetWorkApi.Core.Model
         public IEnumerable<Entity> Data { get; set; }
 
         /// <summary>
+        /// The metadata for this paging data
+        /// </summary>
+        public IEnumerable<ColumnData> MetaData { get; internal set; }
+
+        /// <summary>
         /// Get pagination data
         /// </summary>
         /// <param name="count"></param>

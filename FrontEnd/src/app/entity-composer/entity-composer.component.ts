@@ -1,16 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { DataProviderService } from '../services/data-provider.service'
 
 @Component({
-  moduleId: module.id,
-  selector: 'app-entity-composer',
-  templateUrl: 'entity-composer.component.html',
-  styleUrls: ['entity-composer.component.css']
+    moduleId: module.id,
+    selector: 'app-entity-composer',
+    templateUrl: 'entity-composer.component.html',
+    styleUrls: ['entity-composer.component.css']
 })
 export class EntityComposerComponent implements OnInit {
 
-  constructor() {}
+    entity = "user"
 
-  ngOnInit() {
-  }
+    /// filters that user set
+    filters = {}
+
+    /// current page
+    page = 0
+
+    /// item perpage
+    itemsPerPage = 10
+
+    /// order by
+    orderBy: string
+
+    /// is sorting acsding
+    isAscending = true
+
+    /// constructers
+    constructor(private provider: DataProviderService) { }
+
+    /**
+     * Initialize the project
+     */
+    ngOnInit() {
+        this.provider.queryData(
+            this.entity,
+            this.filters,
+            this.page * this.itemsPerPage,
+            this.itemsPerPage,
+            this.orderBy,
+            this.isAscending,
+            true
+        ).subscribe(
+            response => {
+                console.log(response.json())
+            }
+        )
+    }
 
 }

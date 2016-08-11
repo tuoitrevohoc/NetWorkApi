@@ -27,7 +27,16 @@
     <Content Include="config\karma-test-shim.js" />
     <Content Include="config\karma.conf.js" />
     <Content Include="config\protractor.conf.js" />
-    <Content Include="src\**" />
+    <Content Include="src\app\app.component.css" />
+    <Content Include="src\app\app.component.html" />
+    <Content Include="src\app\entity-composer\entity-composer.component.css" />
+    <Content Include="src\app\entity-composer\entity-composer.component.html" />
+    <Content Include="src\app\menu\menu.component.css" />
+    <Content Include="src\app\menu\menu.component.html" />
+    <Content Include="src\favicon.ico" />
+    <Content Include="src\index.html" />
+    <Content Include="src\styles\main.css" />
+    <Content Include="src\WaterTexture.jpg" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -46,15 +55,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.routes.ts" />
-    <TypeScriptCompile Include="src\app\entity-composer\entity-composer.component.spec.ts" />
     <TypeScriptCompile Include="src\app\entity-composer\entity-composer.component.ts" />
     <TypeScriptCompile Include="src\app\entity-composer\index.ts" />
     <TypeScriptCompile Include="src\app\entity-composer\shared\index.ts" />
+    <TypeScriptCompile Include="src\app\environment.ts" />
+    <TypeScriptCompile Include="src\app\index.ts" />
+    <TypeScriptCompile Include="src\app\menu\index.ts" />
+    <TypeScriptCompile Include="src\app\menu\menu.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\menu\menu.component.ts" />
+    <TypeScriptCompile Include="src\app\menu\shared\index.ts" />
+    <TypeScriptCompile Include="src\app\model\models.ts" />
+    <TypeScriptCompile Include="src\app\services\data-provider.service.ts" />
+    <TypeScriptCompile Include="src\app\shared\index.ts" />
+    <TypeScriptCompile Include="src\main.ts" />
+    <TypeScriptCompile Include="src\system-config.ts" />
+    <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\app\model\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

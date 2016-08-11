@@ -62,7 +62,8 @@ namespace NetWorkApi.Controllers
             [FromQuery] int start = 0,
             [FromQuery] int limit = 10,
             [FromQuery] string sortBy = null,
-            [FromQuery] bool isAccending = true
+            [FromQuery] bool isAccending = true,
+            [FromQuery] bool includeMetaData = false
             )
         {
             Dictionary<string, string> filters = null;
@@ -72,7 +73,7 @@ namespace NetWorkApi.Controllers
                 filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(query);
             }
 
-            return new PagingData<Entity>( 
+            var result = new PagingData<Entity>( 
                 repository.Count(filters),
                 repository.Find(
                     filters,
@@ -82,13 +83,20 @@ namespace NetWorkApi.Controllers
                     isAccending
                 )
             );
+
+            if (includeMetaData)
+            {
+                result.MetaData = GetMetaData();
+            }
+
+            return result;
         }
 
         /// <summary>
         /// Get validation constraints
         /// </summary>
         [HttpGet("metadata")]
-        public IEnumerable<ColumnData> GetConstraints()
+        public IEnumerable<ColumnData> GetMetaData()
         {
             if (metaData == null)
             {
