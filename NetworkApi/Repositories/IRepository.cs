@@ -5,7 +5,7 @@ namespace NetWorkApi.Repositories
 {
 
     /// <summary>
-    /// 
+    /// The Interface for repository
     /// </summary>
     public interface IRepository<Entity> where Entity: AppModel
     {
