@@ -18,7 +18,8 @@
     "Swashbuckle": "6.0.0-beta901",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
-    "MongoDB.Driver": "2.3.0-beta1"
+    "MongoDB.Driver": "2.3.0-beta1",
+    "Newtonsoft.Json": "9.0.1"
   },
 
   "tools": {

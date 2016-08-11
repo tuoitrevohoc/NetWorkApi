@@ -19,7 +19,6 @@ namespace NetWorkApi.Models
         /// <summary>
         /// Full name of the user
         /// </summary>
-        [Required]
         [StringLength(255, MinimumLength = 5, ErrorMessage = "Name is required")]
         public string FullName { get; set; }
 

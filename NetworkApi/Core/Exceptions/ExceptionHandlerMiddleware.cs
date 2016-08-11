@@ -18,7 +18,6 @@ namespace NetWorkApi.Core.Exceptions
         /// </summary>
         private readonly RequestDelegate next;
 
-
         /// <summary>
         /// create an exception middle ware
         /// </summary>
