@@ -7,6 +7,7 @@ using NetWorkApi.Models;
 using NetWorkApi.Repositories;
 using MongoDB.Driver;
 using System;
+using NetWorkApi.Core.Exceptions;
 
 namespace NetWorkApi
 {
@@ -74,6 +75,7 @@ namespace NetWorkApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             //loggerFactory.AddDebug();
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 
             app.UseDefaultFiles();

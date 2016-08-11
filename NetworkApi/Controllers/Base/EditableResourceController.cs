@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetWorkApi.Core.Exceptions;
 using NetWorkApi.Models;
 using NetWorkApi.Repositories;
 
@@ -30,6 +31,11 @@ namespace NetWorkApi.Controllers.Base
         [HttpPut]
         public Entity Create([FromBody] Entity entity)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ValidationException(ModelState);
+            }
+
             return repository.Save(entity);
         }
 
@@ -41,6 +47,11 @@ namespace NetWorkApi.Controllers.Base
         [HttpPost]
         public Entity Save([FromBody] Entity entity)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ValidationException(ModelState);
+            }
+
             return repository.Save(entity);
         }
 
