@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Driver;
 using System.Linq;
 using MongoDB.Bson;
+using System.Globalization;
 
 namespace NetWorkApi.Repositories
 {
@@ -80,6 +81,73 @@ namespace NetWorkApi.Repositories
             }
 
             return entity;
+        }
+
+
+        /// <summary>
+        /// Build the query
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
+        private FilterDefinition<Entity> BuildQuery(Dictionary<string, string> filters = null)
+        {
+            var filterBuilder = Builders<Entity>.Filter;
+            var queryFilter = filterBuilder.Empty;
+
+            if (filters != null)
+            {
+                foreach (var filter in filters)
+                {
+                    queryFilter = filterBuilder.And(
+                        queryFilter,
+                        filterBuilder.Regex(
+                            filter.Key.First().ToString().ToUpper() + filter.Key.Substring(1),
+                            new BsonRegularExpression("/.*" + filter.Value + ".*/")
+                        )
+                    );
+                }
+            }
+
+            return queryFilter;
+        }
+
+
+        /// <summary>
+        /// Count item 
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
+        public int Count(Dictionary<string, string> filters = null)
+        {
+            return (int) collection.Count(BuildQuery(filters));
+        }
+
+        /// <summary>
+        /// Query data
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <param name="isAccending"></param>
+        /// <returns></returns>
+        public IList<Entity> Find(Dictionary<string, string> filters = null, 
+            int start = 0, 
+            int limit = 10,
+            string sortBy = null, 
+            bool isAccending = true)
+        {
+
+            var cursor = collection.Find(BuildQuery(filters));
+
+            if (sortBy != null)
+            {
+                var sort = Builders<Entity>.Sort;
+                var sortDefinition = isAccending ? sort.Ascending(sortBy) : sort.Descending(sortBy);
+                cursor.Sort(sortDefinition);
+            }
+
+            return cursor.Skip(start).Limit(limit).ToList();
         }
     }
 }

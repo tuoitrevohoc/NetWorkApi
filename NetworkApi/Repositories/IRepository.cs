@@ -1,4 +1,5 @@
-﻿using NetWorkApi.Models;
+﻿using NetWorkApi.Core.Model;
+using NetWorkApi.Models;
 using System.Collections.Generic;
 
 namespace NetWorkApi.Repositories
@@ -35,5 +36,27 @@ namespace NetWorkApi.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(string id);
+
+        /// <summary>
+        /// Count number of item 
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
+        int Count(Dictionary<string, string> filters = null);
+
+        /// <summary>
+        /// Query for data
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="isAccending"></param>
+        /// <returns></returns>
+        IList<Entity> Find(Dictionary<string, string> filters = null,
+            int start = 0,
+            int limit = 10,
+            string sortBy = null,
+            bool isAccending = true);
     }
 }

@@ -38,7 +38,7 @@ namespace NetWorkApi.Core.Exceptions
             {
                 await next.Invoke(context);
             }
-            catch (ValidationException exception)
+            catch (InvalidModelStateException exception)
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetWorkApi.Core.Model;
 using NetWorkApi.Models;
 using NetWorkApi.Repositories;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
 
 namespace NetWorkApi.Controllers
 {
@@ -31,25 +30,6 @@ namespace NetWorkApi.Controllers
         }
 
         /// <summary>
-        /// Get validation constraints
-        /// </summary>
-        [HttpGet("metadata")]
-        public Dictionary<string, IEnumerable<Attribute>> GetConstraints()
-        {
-            var result = new Dictionary<string, IEnumerable<Attribute>>();
-            var type = typeof(Entity);
-            var properties = type.GetProperties();
-
-            foreach (var property in properties)
-            {
-                var attributes = property.GetCustomAttributes<Attribute>();
-                result.Add(property.Name, attributes);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Id of the model
         /// </summary>
         /// <param name="id"></param>
@@ -62,13 +42,38 @@ namespace NetWorkApi.Controllers
 
 
         /// <summary>
-        /// Get a list of data
+        /// Query data from object
         /// </summary>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <param name="orderBy"></param>
         /// <returns></returns>
         [HttpGet]
-        public IList<Entity> GetList()
+        public PagingData<Entity> Query(
+            [FromQuery] string query = null,
+            [FromQuery] int start = 0,
+            [FromQuery] int limit = 10,
+            [FromQuery] string sortBy = null,
+            [FromQuery] bool isAccending = true
+            )
         {
-            return repository.Elements.ToList();
+            Dictionary<string, string> filters = null;
+
+            if (query != null)
+            {
+                filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(query);
+            }
+
+            return new PagingData<Entity>( 
+                repository.Count(filters),
+                repository.Find(
+                    filters,
+                    start,
+                    limit,
+                    sortBy,
+                    isAccending
+                )
+            );
         }
     }
 }

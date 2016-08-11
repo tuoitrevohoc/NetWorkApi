@@ -82,6 +82,11 @@ app-menu.vertical.menu .item {
     padding: 17px 20px;
 }
 
+.ui.table, .ui.button, .ui.checkbox, 
+.ui.checkbox .box:before, .ui.checkbox label:before {
+    border-radius: 0;
+}
+
 .app-content .heading h4 {
     font-weight: 500;
     font-size: 20px;
