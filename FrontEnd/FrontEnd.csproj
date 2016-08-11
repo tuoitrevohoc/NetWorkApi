@@ -52,6 +52,9 @@
     <TypeScriptCompile Include="src\app\entity-composer\index.ts" />
     <TypeScriptCompile Include="src\app\entity-composer\shared\index.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\app\model\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
