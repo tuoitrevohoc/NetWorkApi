@@ -21,7 +21,12 @@ namespace NetWorkApi.Controllers
         /// <summary>
         /// the repository
         /// </summary>
-        protected IRepository<Entity> repository; 
+        protected IRepository<Entity> repository;
+
+        /// <summary>
+        /// Meta data for this entity
+        /// </summary>
+        protected List<ColumnData> metaData;
 
         /// <summary>
         /// 
@@ -85,70 +90,73 @@ namespace NetWorkApi.Controllers
         [HttpGet("metadata")]
         public IEnumerable<ColumnData> GetConstraints()
         {
-            var result = new List<ColumnData>();
-
-            var type = typeof(Entity);
-            var properties = type.GetProperties();
-
-            foreach (var property in properties)
+            if (metaData == null)
             {
-                var columnData = new ColumnData
-                {
-                    Name = property.Name
-                };
+                metaData = new List<ColumnData>();
 
-                var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
+                var type = typeof(Entity);
+                var properties = type.GetProperties();
 
-                if (displayAttribute != null)
+                foreach (var property in properties)
                 {
-                    columnData.DisplayName = displayAttribute.Name;
-                    columnData.Description = displayAttribute.Description;
+                    var columnData = new ColumnData
+                    {
+                        Name = property.Name
+                    };
+
+                    var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
+
+                    if (displayAttribute != null)
+                    {
+                        columnData.DisplayName = displayAttribute.Name;
+                        columnData.Description = displayAttribute.Description;
+                    }
+
+                    var attributes = property.GetCustomAttributes<Attribute>();
+                    var validations = new List<DataValidation>();
+
+                    foreach (var attribute in attributes)
+                    {
+                        var emailAddressAttribute = attribute as EmailAddressAttribute;
+
+                        if (emailAddressAttribute != null)
+                        {
+                            validations.Add(new RegularExpressionValidation(
+                                "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,63}$",
+                                emailAddressAttribute.ErrorMessage
+                                ));
+                            break;
+                        }
+
+                        var rangeAttribute = attribute as RangeAttribute;
+                        if (rangeAttribute != null)
+                        {
+                            validations.Add(new RangeValidation(
+                                rangeAttribute.Minimum,
+                                rangeAttribute.Maximum,
+                                rangeAttribute.ErrorMessage));
+                            break;
+                        }
+
+                        var stringLengthAttribute = attribute as StringLengthAttribute;
+                        if (stringLengthAttribute != null)
+                        {
+                            validations.Add(new StringLengthValidation(
+                                    stringLengthAttribute.MinimumLength,
+                                    stringLengthAttribute.MaximumLength,
+                                    stringLengthAttribute.ErrorMessage
+                                ));
+                            break;
+                        }
+
+                    }
+
+                    columnData.Validations = validations;
+                    metaData.Add(columnData);
                 }
-                    
-                var attributes = property.GetCustomAttributes<Attribute>();
-                var validations = new List<DataValidation>();
-
-                foreach (var attribute in attributes)
-                {
-                    var emailAddressAttribute = attribute as EmailAddressAttribute;
-
-                    if (emailAddressAttribute != null)
-                    {
-                        validations.Add(new RegularExpressionValidation(
-                            "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,63}$",
-                            emailAddressAttribute.ErrorMessage
-                            ));
-                        break;
-                    }
-
-                    var rangeAttribute = attribute as RangeAttribute;
-                    if (rangeAttribute != null)
-                    {
-                        validations.Add(new RangeValidation(
-                            rangeAttribute.Minimum,
-                            rangeAttribute.Maximum,
-                            rangeAttribute.ErrorMessage));
-                        break;
-                    }
-
-                    var stringLengthAttribute = attribute as StringLengthAttribute;
-                    if (stringLengthAttribute != null)
-                    {
-                        validations.Add(new StringLengthValidation(
-                                stringLengthAttribute.MinimumLength,
-                                stringLengthAttribute.MaximumLength,
-                                stringLengthAttribute.ErrorMessage
-                            ));
-                        break;
-                    }
-
-                }
-
-                columnData.Validations = validations;
-                result.Add(columnData);
             }
 
-            return result;
+            return metaData;
         }
     }
 }
