@@ -33,6 +33,9 @@ export class EntityComposerComponent implements OnInit {
     /// data to display
     data: any[]
 
+    /// is loading
+    isLoading = false
+
     /// constructers
     constructor(private provider: DataProviderService) { }
 
@@ -48,6 +51,8 @@ export class EntityComposerComponent implements OnInit {
      * load data 
      */
     loadData() {
+        this.isLoading = true
+
         this.provider.queryData(
             this.entity,
             this.filters,
@@ -67,9 +72,20 @@ export class EntityComposerComponent implements OnInit {
      */
     dataLoaded(pagingData: PagingData<any>) {
         if (pagingData.metaData) {
-
+            this.setMetaData(pagingData.metaData)
         }
 
+        this.data = pagingData.data
+        this.isLoading = false
+    }
 
+    /**
+     * set the metdata
+     * @param metaData
+     */
+    setMetaData(metaData: ColumnData[]) {
+        this.columnsData = metaData.filter(
+            item => item.displayName != null
+        )
     }
 }

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using NetworkApi.Repositories.Query;
@@ -106,7 +107,9 @@ namespace NetWorkApi.Controllers
                 {
                     var columnData = new ColumnData
                     {
-                        Name = property.Name
+                        Name = property.Name.First()
+                                            .ToString()
+                                            .ToLower() + property.Name.Substring(1)
                     };
 
                     var displayAttribute = property.GetCustomAttribute<DisplayAttribute>();
