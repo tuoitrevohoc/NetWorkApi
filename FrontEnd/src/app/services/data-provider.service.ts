@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import { Http, Response } from '@angular/http'
+import { PagingData } from '../model/models'
 
 @Injectable()
 export class DataProviderService {
@@ -23,7 +24,7 @@ export class DataProviderService {
     /**
      * query data 
      */
-    queryData(entity: string, 
+    queryData<T>(entity: string, 
                 filters: any = undefined,
                 start: number = 0,
                 limit: number = 10,
@@ -44,7 +45,7 @@ export class DataProviderService {
 
         query += "includeMetaData=" + includeMetaData + "&"
 
-        return this.http.get(query)
+        return this.http.get(query).map(item => item.json() as PagingData<T>)
     }
 
     /**

@@ -20,6 +20,21 @@ export interface ColumnData {
 
 }
 
+/**
+ * paging data
+ **/
+export interface PagingData<Item> {
+
+    /// number of items
+    count: number
+
+    /// data 
+    data: Item[]
+
+    /// metadata 
+    metaData: ColumnData[]
+}
+
 
 /**
  * the application model

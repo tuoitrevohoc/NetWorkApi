@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { DataProviderService } from '../services/data-provider.service'
+import { PagingData, ColumnData } from '../model/models'
 
 @Component({
     moduleId: module.id,
@@ -26,6 +27,12 @@ export class EntityComposerComponent implements OnInit {
     /// is sorting acsding
     isAscending = true
 
+    /// columns data
+    columnsData: ColumnData[]
+
+    /// data to display
+    data: any[]
+
     /// constructers
     constructor(private provider: DataProviderService) { }
 
@@ -33,6 +40,14 @@ export class EntityComposerComponent implements OnInit {
      * Initialize the project
      */
     ngOnInit() {
+        this.loadData()
+    }
+
+
+    /**
+     * load data 
+     */
+    loadData() {
         this.provider.queryData(
             this.entity,
             this.filters,
@@ -40,12 +55,21 @@ export class EntityComposerComponent implements OnInit {
             this.itemsPerPage,
             this.orderBy,
             this.isAscending,
-            true
+            this.columnsData === undefined
         ).subscribe(
-            response => {
-                console.log(response.json())
-            }
+            data => this.dataLoaded(data)
         )
     }
 
+
+    /**
+     * handle data loaded
+     */
+    dataLoaded(pagingData: PagingData<any>) {
+        if (pagingData.metaData) {
+
+        }
+
+
+    }
 }
