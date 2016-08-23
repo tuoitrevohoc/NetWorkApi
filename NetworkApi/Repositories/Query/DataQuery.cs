@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using NetworkApi.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -48,7 +49,8 @@ namespace NetworkApi.Repositories.Query {
     /// Create a data query
     /// </summary>
     public DataQuery(string query)
-          :this(JsonConvert.DeserializeObject<JObject>(query)) {
+
+          :this(query != null ? JsonConvert.DeserializeObject<JObject>(query) : null) {
     }
 
 
@@ -57,8 +59,15 @@ namespace NetworkApi.Repositories.Query {
     /// </summary>
     /// <param name="query"></param>
     public DataQuery(JObject query) {
-      var properties = query.Properties();
-      Condition = ParseQuery(query, LogicOperator.And);
+
+      if (query != null) {
+        var properties = query.Properties();
+        Condition = ParseQuery(query, LogicOperator.And);
+      } else {
+        Condition = new LogicCondition();
+      }
+
+      
     }
 
     /// <summary>
@@ -128,7 +137,9 @@ namespace NetworkApi.Repositories.Query {
             }
             
             var condition = new ExpressionCondition(
-              theOperator, property.Name, filter.Value
+              theOperator, 
+              property.Name, 
+              filter.Value.ToAnyObject()
             );
 
             result.Add(condition);
@@ -138,7 +149,7 @@ namespace NetworkApi.Repositories.Query {
           var condition = new ExpressionCondition(
             Operator.Equals,
             property.Name,
-            property.Value
+            property.Value.ToAnyObject()
           );
 
           result.Add(condition);

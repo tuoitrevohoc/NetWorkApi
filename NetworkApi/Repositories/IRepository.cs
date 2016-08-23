@@ -1,6 +1,7 @@
 ﻿using NetWorkApi.Core.Model;
 using NetWorkApi.Models;
 using System.Collections.Generic;
+using NetworkApi.Repositories.Query;
 
 namespace NetWorkApi.Repositories
 {
@@ -40,9 +41,9 @@ namespace NetWorkApi.Repositories
         /// <summary>
         /// Count number of item 
         /// </summary>
-        /// <param name="filters"></param>
+        /// <param name="query"></param>
         /// <returns></returns>
-        int Count(Dictionary<string, string> filters = null);
+        int Count(DataQuery query = null);
 
         /// <summary>
         /// Query for data
@@ -53,7 +54,7 @@ namespace NetWorkApi.Repositories
         /// <param name="sortBy"></param>
         /// <param name="isAccending"></param>
         /// <returns></returns>
-        IList<Entity> Find(Dictionary<string, string> filters = null,
+        IList<Entity> Find(DataQuery query = null,
             int start = 0,
             int limit = 10,
             string sortBy = null,

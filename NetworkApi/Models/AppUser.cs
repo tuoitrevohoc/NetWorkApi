@@ -30,5 +30,11 @@ namespace NetWorkApi.Models
         [Display(Name = "Avatar of the user")]
         public string Avatar { get; set; }
 
+        /// <summary>
+        /// Age of the user
+        /// </summary>
+        /// <returns></returns>
+        public int Age { get; set; }
+
     }
 }

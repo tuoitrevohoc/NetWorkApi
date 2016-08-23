@@ -59,7 +59,7 @@ namespace NetWorkApi.Controllers
         /// <param name="orderBy"></param>
         /// <returns></returns>
         [HttpGet]
-        public DataQuery Query(
+        public PagingData<Entity> Query(
             [FromQuery] string query = null,
             [FromQuery] int start = 0,
             [FromQuery] int limit = 10,
@@ -68,7 +68,25 @@ namespace NetWorkApi.Controllers
             [FromQuery] bool includeMetaData = false
             )
         {
-            return new DataQuery(query);
+            DataQuery dataQuery = new DataQuery(query);
+
+            var result = new PagingData<Entity>( 
+                repository.Count(dataQuery),
+                repository.Find(
+                    dataQuery,
+                    start,
+                    limit,
+                    sortBy,
+                    isAccending
+                )
+            );
+
+            if (includeMetaData)
+            {
+                result.MetaData = GetMetaData();
+            }
+
+            return result;
         }
 
         /// <summary>

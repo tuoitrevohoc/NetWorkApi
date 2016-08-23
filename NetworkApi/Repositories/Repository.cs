@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Driver;
 using System.Linq;
 using MongoDB.Bson;
+using NetworkApi.Repositories.Query;
 
 namespace NetWorkApi.Repositories
 {
@@ -88,22 +89,62 @@ namespace NetWorkApi.Repositories
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        private FilterDefinition<Entity> BuildQuery(Dictionary<string, string> filters = null)
+        private FilterDefinition<Entity> BuildQuery(DataQuery query = null)
         {
             var filterBuilder = Builders<Entity>.Filter;
             var queryFilter = filterBuilder.Empty;
 
-            if (filters != null)
+            if (query != null)
             {
-                foreach (var filter in filters)
-                {
-                    queryFilter = filterBuilder.And(
-                        queryFilter,
-                        filterBuilder.Regex(
-                            filter.Key.First().ToString().ToUpper() + filter.Key.Substring(1),
-                            new BsonRegularExpression("/.*" + filter.Value + ".*/")
-                        )
-                    );
+                queryFilter = BuildFilter(filterBuilder, query.Condition);
+            }
+
+            return queryFilter;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filterBuilder"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        private FilterDefinition<Entity> BuildFilter(FilterDefinitionBuilder<Entity> filterBuilder,
+            Condition condition)
+        {
+            var queryFilter = filterBuilder.Empty;
+
+            if (condition is LogicCondition) {
+                var logicCondition = condition as LogicCondition;
+                var filters = new List<FilterDefinition<Entity>>();
+
+                foreach (var filterCondition in logicCondition.Conditions) {
+                    var filter = BuildFilter(filterBuilder, filterCondition);
+                    filters.Add(filter);
+                }
+
+                if (logicCondition.Operator == LogicOperator.And) {
+                    queryFilter = filterBuilder.And(filters);
+                } else {
+                    queryFilter = filterBuilder.Or(filters);
+                }
+            } else {
+                var fieldCondition = condition as ExpressionCondition;
+                switch (fieldCondition.Operator) {
+                    case Operator.Greater:
+                        queryFilter = filterBuilder.Gt(fieldCondition.FieldName, fieldCondition.Value);
+                        break;
+                    case Operator.Less:
+                        queryFilter = filterBuilder.Lt(fieldCondition.FieldName, fieldCondition.Value);
+                        break;
+                    case Operator.GreaterOrEquals:
+                        queryFilter = filterBuilder.Gte(fieldCondition.FieldName, fieldCondition.Value);
+                        break;
+                    case Operator.LessOrEquals:
+                        queryFilter = filterBuilder.Lte(fieldCondition.FieldName, fieldCondition.Value);
+                        break;
+                    default:
+                        queryFilter = filterBuilder.Eq(fieldCondition.FieldName, fieldCondition.Value);
+                        break;
                 }
             }
 
@@ -111,33 +152,34 @@ namespace NetWorkApi.Repositories
         }
 
 
+
         /// <summary>
         /// Count item 
         /// </summary>
-        /// <param name="filters"></param>
+        /// <param name="query"></param>
         /// <returns></returns>
-        public int Count(Dictionary<string, string> filters = null)
+        public int Count(DataQuery query = null)
         {
-            return (int) collection.Count(BuildQuery(filters));
+            return (int) collection.Count(BuildQuery(query));
         }
 
         /// <summary>
         /// Query data
         /// </summary>
-        /// <param name="filters"></param>
+        /// <param name="query"></param>
         /// <param name="sortBy"></param>
         /// <param name="start"></param>
         /// <param name="limit"></param>
         /// <param name="isAccending"></param>
         /// <returns></returns>
-        public IList<Entity> Find(Dictionary<string, string> filters = null, 
+        public IList<Entity> Find(DataQuery query = null, 
             int start = 0, 
             int limit = 10,
             string sortBy = null, 
             bool isAccending = true)
         {
 
-            var cursor = collection.Find(BuildQuery(filters));
+            var cursor = collection.Find(BuildQuery(query));
 
             if (sortBy != null)
             {
