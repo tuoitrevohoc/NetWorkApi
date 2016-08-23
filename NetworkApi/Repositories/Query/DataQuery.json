@@ -1,0 +1,17 @@
+/// example of data query object 
+{
+  "name": {
+    "$contains": "Tran"
+  },
+  "email": {
+    "$endWith": "@gmail.com"
+  },
+  "age": {
+    "$gt": 9
+  },
+  "$or": {
+    "gender": {
+      "$equals": ["male", "female"]
+    }
+  }
+}

@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
+using NetworkApi.Repositories.Query;
 
 namespace NetWorkApi.Controllers
 {
@@ -57,7 +59,7 @@ namespace NetWorkApi.Controllers
         /// <param name="orderBy"></param>
         /// <returns></returns>
         [HttpGet]
-        public PagingData<Entity> Query(
+        public DataQuery Query(
             [FromQuery] string query = null,
             [FromQuery] int start = 0,
             [FromQuery] int limit = 10,
@@ -66,30 +68,7 @@ namespace NetWorkApi.Controllers
             [FromQuery] bool includeMetaData = false
             )
         {
-            Dictionary<string, string> filters = null;
-
-            if (query != null)
-            {
-                filters = JsonConvert.DeserializeObject<Dictionary<string, string>>(query);
-            }
-
-            var result = new PagingData<Entity>( 
-                repository.Count(filters),
-                repository.Find(
-                    filters,
-                    start,
-                    limit,
-                    sortBy,
-                    isAccending
-                )
-            );
-
-            if (includeMetaData)
-            {
-                result.MetaData = GetMetaData();
-            }
-
-            return result;
+            return new DataQuery(query);
         }
 
         /// <summary>
