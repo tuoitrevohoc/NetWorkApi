@@ -62,6 +62,7 @@
     <TypeScriptCompile Include="src\app\entity-composer\index.ts" />
     <TypeScriptCompile Include="src\app\entity-composer\shared\index.ts" />
     <TypeScriptCompile Include="src\app\environment.ts" />
+    <TypeScriptCompile Include="src\app\form-elements\form.component.ts" />
     <TypeScriptCompile Include="src\app\index.ts" />
     <TypeScriptCompile Include="src\app\menu\index.ts" />
     <TypeScriptCompile Include="src\app\menu\menu.component.spec.ts" />

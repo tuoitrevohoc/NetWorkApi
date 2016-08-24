@@ -89,8 +89,9 @@ app-menu.vertical.menu .item {
     padding: 17px 20px;
 }
 
-.ui.table, .ui.button, .ui.checkbox, 
-.ui.checkbox .box:before, .ui.checkbox label:before {
+.ui.table, .ui.button, .ui.checkbox,
+.ui.checkbox .box:before, .ui.checkbox label:before,
+.ui.input, .ui.input input {
     border-radius: 0;
 }
 

@@ -6,29 +6,5 @@
         <div class="ui text loader">Loading...</div>
     </div>
 
-    <table class="ui table">
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                <th *ngFor="let column of columnsData">
-                    {{ column.displayName }}
-                </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of data">
-                <td>
-                    <div class="ui checkbox">
-                        <input type="checkbox" />
-                        <label></label>
-                    </div>
-                </td>
-                <td *ngFor="let column of columnsData">
-                    {{ item[column.name] }}
-                </td>
-                <td>Actions</td>
-            </tr>
-        </tbody>
-    </table>
+    <app-form></app-form>
 </div>
